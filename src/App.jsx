@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <div className='container'>
-      {currentUser ? (
+      {currentUser  ? (
         <>
           <List />
           {chatId && <Chats />}

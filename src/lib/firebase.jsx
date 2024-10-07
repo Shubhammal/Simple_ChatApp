@@ -10,7 +10,7 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_API_KEY,
+    apiKey: "AIzaSyDBc9GTx-ninvx8KZMxMuOLFwERY4e_yBc",
     authDomain: "reactshuchat.firebaseapp.com",
     projectId: "reactshuchat",
     storageBucket: "reactshuchat.appspot.com",

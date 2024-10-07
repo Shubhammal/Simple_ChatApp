@@ -4,10 +4,15 @@ import { useChatStore } from "../../lib/chatStore"
 import { auth, db } from "../../lib/firebase"
 import { useUserStore } from "../../lib/userStore"
 import "./detail.css"
+import { useState } from "react"
+import SharedPhotos from "./SharedPhotos"
+
 
 const Detail = () => {
-    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore()
+    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
+    const [optionSection , setoptionSection] = useState(false);
     const { currentUser } = useUserStore();
+
     const handleBlock = async () => {
         if (!user) return;
 
@@ -22,6 +27,9 @@ const Detail = () => {
             console.log(error);
         }
     }
+    const toggleSection =(section) =>{
+        setoptionSection(optionSection === section ? null :section);
+    }
     return (
         <div className="detail">
             <div className="user">
@@ -31,74 +39,46 @@ const Detail = () => {
             </div>
             <div className="info">
                 <div className="option">
-                    <div className="title">
+                    <div className="title" onClick={() => toggleSection('settings')}>
                         <span>Chat Setting</span>
-                        <img src="./arrowUp.png" alt="" />
+                        {optionSection === 'settings' ? <img src="./arrowUp.png" alt=""/> : <img src="./arrowDown.png" alt="" />}
                     </div>
+                    {optionSection === 'settings' && <div className="content">Chat settings content...</div>}
                 </div>
 
 
                 <div className="option">
-                    <div className="title">
+                    <div className="title" onClick={()=> toggleSection('Privacy')}>
                         <span>Privacy % help</span>
-                        <img src="./arrowUp.png" alt="" />
+                        {optionSection === 'Privacy' ? <img src="./arrowUp.png" alt=""/> : <img src="./arrowDown.png" alt="" />}
                     </div>
+                    {optionSection === 'Privacy' && 
+                    <div className="content"> privacy and setting part </div>}
                 </div>
 
 
 
                 <div className="option">
-                    <div className="title">
+                    <div className="title" onClick={()=> toggleSection('Photos')} >
                         <span>Shared photos</span>
-                        <img src="./arrowDown.png" alt="" />
+                        {optionSection === 'Photos'? <img src="./arrowUp.png" alt=""/>:<img src="./arrowDown.png" alt="" /> } 
                     </div>
-                    <div className="photos">
+                    {optionSection === 'Photos' && <SharedPhotos chatId={chatId} userId={currentUser.id} />
+}
 
-
-                        <div className="photoItem">
-                            <div className="photoDetail">
-                                <img src="https://wallpapercave.com/wp/tM7GHV6.jpg" />
-                                <span>photo_2024_2.png</span>
-                            </div>
-                            <img src="./downlaod.png" alt="" className="icon" />
-                        </div>
-
-                        <div className="photoItem">
-                            <div className="photoDetail">
-                                <img src="https://wallpapercave.com/wp/tM7GHV6.jpg" />
-                                <span>photo_2024_2.png</span>
-                            </div>
-                            <img src="./downlaod.png" alt="" className="icon" />
-                        </div>
-
-                        <div className="photoItem">
-                            <div className="photoDetail">
-                                <img src="https://wallpapercave.com/wp/tM7GHV6.jpg" />
-                                <span>photo_2024_2.png</span>
-                            </div>
-                            <img src="./downlaod.png" alt="" className="icon" />
-                        </div>
-
-                        <div className="photoItem">
-                            <div className="photoDetail">
-                                <img src="https://wallpapercave.com/wp/tM7GHV6.jpg" />
-                                <span>photo_2024_2.png</span>
-                            </div>
-                            <img src="./downlaod.png" alt="" className="icon" />
-                        </div>
-
-
-
-                    </div>
                 </div>
-
+                    
 
 
                 <div className="option">
-                    <div className="title">
+                    <div className="title" onClick={()=> toggleSection('Shared_Files')}>
                         <span>Shared Files</span>
-                        <img src="./arrowUp.png" alt="" />
+                        {optionSection === 'Shared_Files'? <img src="./arrowUp.png" alt=""/>:<img src="./arrowDown.png" alt="" /> } 
                     </div>
+                    {optionSection === 'Shared_Files' &&
+                    <div className="content">
+                        Shared Files part....
+                        </div>}
                 </div>
                 <button onClick={handleBlock}>{
                     isCurrentUserBlocked ? "You are Blocked" : isReceiverBlocked ? "User blocked" : "Block User"

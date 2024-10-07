@@ -50,8 +50,10 @@ const Chat = () => {
 
             setImg({
                 file: e.target.files[0],
-                url: URL.createObjectURL(e.target.files[0])
+                url: URL.createObjectURL(e.target.files[0]),
+            
             })
+            handleSend();
         }
     }
 
@@ -163,7 +165,7 @@ const Chat = () => {
             <div className="bottom">
                 <div className="icons">
                     <label htmlFor="file">
-
+                        
                         <img src="./img.png" alt="" />
                     </label>
                     <input type="file" id="file" style={{ display: "none" }} onChange={handleImg} />
